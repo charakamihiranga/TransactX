@@ -4,6 +4,7 @@ const colors = {
     background: "#f5f5f5",
     text: "#000000",
     white: "#ffffff",
+    gray: "#777",
     black: "#000000",
     error: "#B00020",
     success: "#388E3C",

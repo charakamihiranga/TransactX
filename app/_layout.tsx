@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { View } from "react-native";
 import * as Font from "expo-font";
+import {Provider} from "react-redux";
+import {store} from "@/redux/Store";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,8 +36,35 @@ export default function RootLayout() {
     }
 
     return (
-        <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
+        <Provider store={store}>
+            <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen
+                    name="screens/add-customer"
+                    options={{
+                        title: "Add Customer",
+                        headerTitleAlign: "center",
+                        headerTitleStyle: {
+                            fontSize: 15,
+                            fontWeight: "bold",
+                            fontFamily: "Poppins-Regular",
+                        }
+                    }}
+                />
+                <Stack.Screen
+                    name="screens/manage-customer"
+                    options={{
+                        title: "Manage Customer",
+                        headerTitleAlign: "center",
+                        headerTitleStyle: {
+                            fontSize: 15,
+                            fontWeight: "bold",
+                            fontFamily: "Poppins-Regular",
+                        }
+                    }}
+                />
+            </Stack>
+        </Provider>
+
     );
 }
