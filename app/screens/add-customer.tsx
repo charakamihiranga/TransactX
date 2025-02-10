@@ -1,4 +1,4 @@
-import { View, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import colors from "@/constants/colors";
 import { useState } from "react";
