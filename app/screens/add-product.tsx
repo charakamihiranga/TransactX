@@ -29,7 +29,7 @@ export default function AddProduct() {
   const [category, setCategory] = useState("");
   const [image, setImage] = useState("");
 
-  // Function to pick an image and convert to Base64
+  // Function to pick an image
   async function pickImage() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -52,92 +52,98 @@ export default function AddProduct() {
     }
 
     const newProduct = new ItemModel(
-      generateId("PROD"),
-      name,
-      parseFloat(price),
-      description,
-      category,
-      image,
-      parseInt(quantity)
+        generateId("PROD"),
+        name,
+        parseFloat(price),
+        description,
+        category,
+        image,
+        parseInt(quantity)
     );
 
     dispatch(addItem(newProduct));
     alert("Product added!");
     router.back();
-    1500;
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
-      <ScrollView contentContainerStyle={styles.innerContainer}>
-        {/* Image Picker */}
-        <TouchableOpacity onPress={pickImage} style={styles.imageContainer}>
-          {image ? (
-            <Image source={{ uri: image }} style={styles.image} />
-          ) : (
-            <View style={styles.placeholder}>
-              <MaterialIcons name="add-a-photo" size={40} color="gray" />
-            </View>
-          )}
-        </TouchableOpacity>
-
-        <TextInput
-          label="Name"
-          mode="outlined"
-          style={styles.textInput}
-          value={name}
-          onChangeText={setName}
-          theme={{ colors: { primary: colors.primary } }}
-        />
-        <TextInput
-          label="Price"
-          mode="outlined"
-          keyboardType="numeric"
-          style={styles.textInput}
-          value={price}
-          onChangeText={(value) => setPrice(value.replace(/[^0-9.]/g, ""))}
-          theme={{ colors: { primary: colors.primary } }}
-        />
-        <TextInput
-          label="Quantity"
-          mode="outlined"
-          keyboardType="numeric"
-          style={styles.textInput}
-          value={quantity}
-          onChangeText={(value) => setQuantity(value.replace(/[^0-9]/g, ""))}
-          theme={{ colors: { primary: colors.primary } }}
-        />
-        <TextInput
-          label="Category"
-          mode="outlined"
-          keyboardType="default"
-          style={styles.textInput}
-          value={category}
-          onChangeText={setCategory}
-          theme={{ colors: { primary: colors.primary } }}
-        />
-        <TextInput
-          label="Description"
-          mode="outlined"
-          multiline={true}
-          numberOfLines={4}
-          style={[styles.textInput, styles.textArea]}
-          value={description}
-          onChangeText={setDescription}
-          theme={{ colors: { primary: colors.primary } }}
-        />
-        <Button
-          mode="contained"
-          onPress={addItemOnAction}
-          style={styles.button}
+      <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.container}
+      >
+        <ScrollView
+            contentContainerStyle={styles.innerContainer}
+            keyboardShouldPersistTaps="handled"
         >
-          Save Product
-        </Button>
-      </ScrollView>
-    </KeyboardAvoidingView>
+          <View style={styles.form}>
+            {/* Image Picker */}
+            <TouchableOpacity onPress={pickImage} style={styles.imageContainer}>
+              {image ? (
+                  <Image source={{ uri: image }} style={styles.image} />
+              ) : (
+                  <View style={styles.placeholder}>
+                    <MaterialIcons name="add-a-photo" size={40} color="gray" />
+                  </View>
+              )}
+            </TouchableOpacity>
+
+            <TextInput
+                label="Name"
+                mode="outlined"
+                style={styles.textInput}
+                value={name}
+                onChangeText={setName}
+                theme={{ colors: { primary: colors.primary } }}
+            />
+            <TextInput
+                label="Price"
+                mode="outlined"
+                keyboardType="numeric"
+                style={styles.textInput}
+                value={price}
+                onChangeText={(value) => setPrice(value.replace(/[^0-9.]/g, ""))}
+                theme={{ colors: { primary: colors.primary } }}
+            />
+            <TextInput
+                label="Quantity"
+                mode="outlined"
+                keyboardType="numeric"
+                style={styles.textInput}
+                value={quantity}
+                onChangeText={(value) => setQuantity(value.replace(/[^0-9]/g, ""))}
+                theme={{ colors: { primary: colors.primary } }}
+            />
+            <TextInput
+                label="Category"
+                mode="outlined"
+                keyboardType="default"
+                style={styles.textInput}
+                value={category}
+                onChangeText={setCategory}
+                theme={{ colors: { primary: colors.primary } }}
+            />
+            <TextInput
+                label="Description"
+                mode="outlined"
+                multiline
+                numberOfLines={4}
+                style={styles.textArea}
+                value={description}
+                onChangeText={setDescription}
+                theme={{ colors: { primary: colors.primary } }}
+            />
+          </View>
+
+          {/* Button positioned at bottom */}
+          <Button
+              mode="contained"
+              onPress={addItemOnAction}
+              style={styles.button}
+          >
+            Save Product
+          </Button>
+        </ScrollView>
+      </KeyboardAvoidingView>
   );
 }
 
@@ -145,15 +151,27 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
   innerContainer: {
     flexGrow: 1,
-    marginTop: 40,
+    justifyContent: "space-between",
     paddingHorizontal: 20,
-    paddingBottom: 40,
+    paddingBottom: 20,
   },
-  textInput: { width: "100%", marginBottom: 15 },
-  button: { width: "100%", marginTop: 10, backgroundColor: colors.primary },
+  form: {
+    flex: 1,
+    marginTop: 20
+  },
+  textInput: {
+    width: "100%",
+    marginBottom: 15
+  },
+  button: {
+    width: "100%",
+    marginTop: 20,
+    marginBottom: 10,
+    backgroundColor: colors.primary
+  },
   imageContainer: {
     width: "100%",
-    height: "36%",
+    height: 200,
     alignSelf: "center",
     marginBottom: 15,
   },
