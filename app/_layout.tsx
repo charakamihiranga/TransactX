@@ -75,6 +75,18 @@ export default function RootLayout() {
             },
           }}
         />
+          <Stack.Screen
+          name="screens/manage-product"
+          options={{
+            title: "Manage Product",
+            headerTitleAlign: "center",
+            headerTitleStyle: {
+              fontSize: 15,
+              fontWeight: "bold",
+              fontFamily: "Poppins-Regular",
+            },
+          }}
+        />
       </Stack>
     </Provider>
   );

@@ -2,6 +2,7 @@ const colors = {
     primary: "#faad2d",
     secondary: "#fea73a",
     cardColor: "#faad2e",
+    pane: "#fbc46b",
     background: "#f5f5f5",
     text: "#000000",
     white: "#ffffff",

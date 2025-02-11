@@ -22,7 +22,7 @@ export default function ItemCard({ item }: Props) {
                 <Card.Cover source={{ uri: item.image || "https://via.placeholder.com/150" }} style={styles.image} />
                 <Card.Content>
                     <Text style={styles.title}>{item.name}</Text>
-                    <Text style={styles.price}>${item.price.toFixed(2)}</Text>
+                    <Text style={styles.price}>Rs.{item.price.toFixed(2)}</Text>
                 </Card.Content>
             </Card>
         </TouchableOpacity>
