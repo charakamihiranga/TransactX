@@ -4,14 +4,12 @@ import { useState } from "react";
 import { FAB, Searchbar } from "react-native-paper";
 import colors from "@/constants/colors";
 import ItemModel from "@/model/ItemModel";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/Store";
 import ItemCard from "@/components/ItemCard";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Products() {
   const router = useRouter();
-  const items: ItemModel[] = useSelector((state: RootState) => state.item);
+  const items: ItemModel[] = [];
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredItems = items.filter((item) =>

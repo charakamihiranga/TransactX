@@ -14,13 +14,11 @@ import { Button, TextInput } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import colors from "@/constants/colors";
-import { addItem } from "@/redux/slice/ItemSlice";
 import ItemModel from "@/model/ItemModel";
 import { generateId } from "@/util/IdGenerator";
 
 export default function AddProduct() {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -61,7 +59,7 @@ export default function AddProduct() {
         parseInt(quantity)
     );
 
-    dispatch(addItem(newProduct));
+    console.log(newProduct);
     alert("Product added!");
     router.back();
   }

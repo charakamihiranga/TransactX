@@ -9,22 +9,18 @@ import {
   Alert,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Button, TextInput } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialIcons } from "@expo/vector-icons";
 import colors from "@/constants/colors";
-import { updateItem, removeItem } from "@/redux/slice/ItemSlice";
 import ItemModel from "@/model/ItemModel";
-import { RootState } from "@/redux/Store";
 
 export default function ManageProduct() {
   const { id } = useLocalSearchParams();
-  const items = useSelector((state: RootState) => state.item);
+  const items: ItemModel[] = [];
   const item = items.find((i) => i.id === id);
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -66,7 +62,7 @@ export default function ManageProduct() {
     }
 
     const updatedProduct = new ItemModel(
-      id,
+      id as string,
       name,
       parseFloat(price),
       description,
@@ -75,7 +71,7 @@ export default function ManageProduct() {
       parseInt(quantity)
     );
 
-    dispatch(updateItem(updatedProduct));
+    console.log(updatedProduct);
     Alert.alert("Success", "Product updated!");
     router.back();
   }
@@ -90,7 +86,7 @@ export default function ManageProduct() {
           text: "Delete",
           style: "destructive",
           onPress: () => {
-            dispatch(removeItem(id));
+            console.log(id)
             Alert.alert("Deleted", "Product deleted!");
             router.back();
           },

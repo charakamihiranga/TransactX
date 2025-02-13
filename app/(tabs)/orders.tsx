@@ -1,29 +1,27 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from "react-native";
-import { useRouter } from "expo-router";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/redux/Store";
 import { OrderModel } from "@/model/OrderModel";
 import { OrderDetailModel } from "@/model/OrderDetailModel";
-import { removeOrder } from "@/redux/slice/PlaceOrderSlice";
 
 interface OrderWithDetails extends OrderModel {
   orderDetails: OrderDetailModel[];
 }
 
 export default function Orders() {
-  const router = useRouter();
-  const dispatch = useDispatch();
+  const data = {
+    orders: [],
+    orderDetails: {},
+  };
 
-  const { orders, orderDetails } = useSelector((state: RootState) => state.order);
-  const customers = useSelector((state: RootState) => state.customer);
-  const items = useSelector((state: RootState) => state.item);
+  const { orders, orderDetails } = data;
+  const customers: any[] = [];
+  const items: any[] = [];
 
-  // Combine orders with their details
-  const ordersWithDetails: OrderWithDetails[] = orders.map(order => ({
-    ...order,
-    orderDetails: orderDetails.filter(detail => detail.orderId === order.id),
-  }));
+  // // Combine orders with their details
+  // const ordersWithDetails: OrderWithDetails[] = orders.map(order => ({
+  //   ...order,
+  //   orderDetails: orderDetails.filter(detail => detail.orderId === order.id),
+  // }));
 
   // Helper to get customer name by ID
   const getCustomerName = (customerId: string) => {
@@ -47,7 +45,7 @@ export default function Orders() {
           {
             text: "Delete",
             style: "destructive",
-            onPress: () => dispatch(removeOrder(orderId)),
+            onPress: () => console.log(orderId)
           },
         ],
         { cancelable: true }
@@ -58,38 +56,38 @@ export default function Orders() {
       <View style={styles.container}>
         <Text style={styles.header}>Orders</Text>
 
-        {ordersWithDetails.length === 0 ? (
-            <Text style={styles.noOrdersText}>No orders found</Text>
-        ) : (
-            <FlatList
-                data={ordersWithDetails}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <View style={styles.orderCard}>
-                      <Text style={styles.orderText}>Order ID: {item.id}</Text>
-                      <Text style={styles.orderText}>Customer: {getCustomerName(item.customerId)}</Text>
-                      <Text style={styles.orderText}>Date: {new Date(item.date).toLocaleString()}</Text>
-                      <Text style={styles.orderText}>Total Amount: Rs {item.totalAmount.toFixed(2)}</Text>
+        {/*{ordersWithDetails.length === 0 ? (*/}
+        {/*    <Text style={styles.noOrdersText}>No orders found</Text>*/}
+        {/*) : (*/}
+        {/*    <FlatList*/}
+        {/*        data={ordersWithDetails}*/}
+        {/*        keyExtractor={(item) => item.id}*/}
+        {/*        renderItem={({ item }) => (*/}
+        {/*            <View style={styles.orderCard}>*/}
+        {/*              <Text style={styles.orderText}>Order ID: {item.id}</Text>*/}
+        {/*              <Text style={styles.orderText}>Customer: {getCustomerName(item.customerId)}</Text>*/}
+        {/*              <Text style={styles.orderText}>Date: {new Date(item.date).toLocaleString()}</Text>*/}
+        {/*              <Text style={styles.orderText}>Total Amount: Rs {item.totalAmount.toFixed(2)}</Text>*/}
 
-                      <Text style={styles.orderDetailsHeader}>Order Details:</Text>
-                      {item.orderDetails.map((detail) => (
-                          <View key={detail.id} style={styles.orderDetailItem}>
-                            <Text style={styles.detailText}>Item: {getItemName(detail.itemId)}</Text>
-                            <Text style={styles.detailText}>Quantity: {detail.quantity}</Text>
-                            <Text style={styles.detailText}>Price: Rs {detail.price.toFixed(2)}</Text>
-                          </View>
-                      ))}
+        {/*              <Text style={styles.orderDetailsHeader}>Order Details:</Text>*/}
+        {/*              {item.orderDetails.map((detail) => (*/}
+        {/*                  <View key={detail.id} style={styles.orderDetailItem}>*/}
+        {/*                    <Text style={styles.detailText}>Item: {getItemName(detail.itemId)}</Text>*/}
+        {/*                    <Text style={styles.detailText}>Quantity: {detail.quantity}</Text>*/}
+        {/*                    <Text style={styles.detailText}>Price: Rs {detail.price.toFixed(2)}</Text>*/}
+        {/*                  </View>*/}
+        {/*              ))}*/}
 
-                      <TouchableOpacity
-                          style={styles.deleteButton}
-                          onPress={() => confirmDelete(item.id)}
-                      >
-                        <Text style={styles.deleteButtonText}>Delete</Text>
-                      </TouchableOpacity>
-                    </View>
-                )}
-            />
-        )}
+        {/*              <TouchableOpacity*/}
+        {/*                  style={styles.deleteButton}*/}
+        {/*                  onPress={() => confirmDelete(item.id)}*/}
+        {/*              >*/}
+        {/*                <Text style={styles.deleteButtonText}>Delete</Text>*/}
+        {/*              </TouchableOpacity>*/}
+        {/*            </View>*/}
+        {/*        )}*/}
+        {/*    />*/}
+        {/*)}*/}
       </View>
   );
 }

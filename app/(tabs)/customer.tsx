@@ -1,7 +1,5 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import CustomerModel from "@/model/CustomerModel";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/Store";
 import { useRouter } from "expo-router";
 import { FAB, List, Searchbar } from "react-native-paper";
 import colors from "@/constants/colors";
@@ -10,9 +8,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Customer() {
   const router = useRouter();
-  const customers: CustomerModel[] = useSelector(
-    (state: RootState) => state.customer
-  );
+  const customers: CustomerModel[] = [];
   const [searchQuery, setSearchQuery] = useState("");
   // Filter customers based on search query
   const filteredCustomers = customers.filter(

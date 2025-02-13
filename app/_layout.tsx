@@ -4,7 +4,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { View } from "react-native";
 import * as Font from "expo-font";
 import { Provider } from "react-redux";
-import { store } from "@/redux/Store";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,7 +35,6 @@ export default function RootLayout() {
   }
 
   return (
-    <Provider store={store}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
@@ -88,6 +86,5 @@ export default function RootLayout() {
           }}
         />
       </Stack>
-    </Provider>
   );
 }

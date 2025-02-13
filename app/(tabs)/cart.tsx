@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+
 import DropDownPicker from "react-native-dropdown-picker";
-import { RootState } from "@/redux/Store";
 import colors from "@/constants/colors";
-import { addToCart, removeFromCart, updateQuantity, clearCart } from "@/redux/slice/CartSlice";
-import {addOrder} from "@/redux/slice/PlaceOrderSlice";
 import { AntDesign } from "@expo/vector-icons";
 import { OrderModel } from "@/model/OrderModel";
 import { OrderDetailModel } from "@/model/OrderDetailModel";
 import uuid from "react-native-uuid";
+import CustomerModel from "@/model/CustomerModel";
+import ItemModel from "@/model/ItemModel";
 
 export default function Cart() {
-  const dispatch = useDispatch();
 
-  const customers = useSelector((state: RootState) => state.customer);
-  const items = useSelector((state: RootState) => state.item);
-  const cartItems = useSelector((state: RootState) => state.cart);
+  const customers: CustomerModel[] = [];
+  const items : ItemModel[] = [];
+  const cartItems: any = [];
 
   const [customerOpen, setCustomerOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -34,16 +32,16 @@ export default function Cart() {
   const handleItemSelect = (value: any) => {
     const selectedProduct = items.find((i) => i.id === value);
     if (selectedProduct) {
-      dispatch(addToCart({ ...selectedProduct, quantity: 1 }));
+      console.log(selectedProduct);
     }
     setSelectedItem(null);
   };
 
-  const handleIncrease = (id: number) => dispatch(updateQuantity({ id, change: 1 }));
-  const handleDecrease = (id: number) => dispatch(updateQuantity({ id, change: -1 }));
-  const handleRemove = (id: number) => dispatch(removeFromCart(id));
+  const handleIncrease = (id: number) => console.log(id);
+  const handleDecrease = (id: number) => console.log(id);
+  const handleRemove = (id: number) => console.log(id);
 
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = cartItems.reduce((sum: number, item: ItemModel) => sum + item.price * item.qty, 0);
 
   const handlePlaceOrder = () => {
     if (!selectedCustomer) {
@@ -60,11 +58,11 @@ export default function Cart() {
     const newOrder = new OrderModel(orderId, selectedCustomer, totalPrice);
 
     const orderDetails = cartItems.map(
-        (item) => new OrderDetailModel(uuid.v4().toString(), orderId, item.id, item.quantity, item.price)
+        (item: ItemModel) => new OrderDetailModel(uuid.v4().toString(), orderId, item.id, item.qty, item.price)
     );
 
-    dispatch(addOrder({ order: newOrder, orderItems: orderDetails }));
-    dispatch(clearCart());
+    console.log(({ order: newOrder, orderItems: orderDetails }));
+    // clear the chart after save
 
     Alert.alert("Success", "Order placed successfully!");
   };

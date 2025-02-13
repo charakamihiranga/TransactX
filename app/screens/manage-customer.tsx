@@ -1,7 +1,5 @@
   import { useLocalSearchParams, useRouter } from "expo-router";
   import CustomerModel from "@/model/CustomerModel";
-  import { useDispatch, useSelector } from "react-redux";
-  import { RootState } from "@/redux/Store";
   import {
     KeyboardAvoidingView,
     Platform,
@@ -12,17 +10,12 @@
   import { Button, TextInput } from "react-native-paper";
   import { useState, useEffect } from "react";
   import { Alert } from "react-native";
-  import { removeCustomer, updateCustomer } from "@/redux/slice/CustomerSlice";
 
   export default function ManageCustomer() {
     const { id } = useLocalSearchParams();
-    const customers: CustomerModel[] = useSelector(
-      (state: RootState) => state.customer
-    );
+    const customers: CustomerModel[] =[];
     const customer = customers.find((c) => c.id === id);
     const router = useRouter();
-    const dispatch = useDispatch();
-
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
@@ -50,7 +43,7 @@
         address,
         phone
       );
-      dispatch(updateCustomer(updatedCustomer));
+      console.log(updatedCustomer);
       alert("Customer updated successfully!");
       router.back();
     }
@@ -65,7 +58,7 @@
             text: "Delete",
             style: "destructive",
             onPress: () => {
-              dispatch(removeCustomer(id as string));
+              console.log(id as string);
               router.back();
             },
           },

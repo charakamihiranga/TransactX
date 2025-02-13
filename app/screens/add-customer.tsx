@@ -3,14 +3,11 @@ import { Button, TextInput } from "react-native-paper";
 import colors from "@/constants/colors";
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import {useDispatch} from "react-redux";
-import {addCustomer} from "@/redux/slice/CustomerSlice";
 import CustomerModel from "@/model/CustomerModel";
 import {generateId} from "@/util/IdGenerator";
 
 export default function AddCustomer() {
     const router = useRouter();
-    const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
@@ -28,7 +25,7 @@ export default function AddCustomer() {
             address,
             phone
         );
-        dispatch(addCustomer(customer));
+        console.log(customer);
         alert("Customer saved successfully!");
         router.push("/(tabs)/customer");
     }
